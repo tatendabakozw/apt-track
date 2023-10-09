@@ -14,6 +14,9 @@ import { connectDB } from './config/mongo';
 // setting up dotenv for env variables
 dotenv.config()
 
+// user defined routers 
+import authRoute from './routes/auth/auth'
+
 // port to listen on development
 const port = process.env.PORT || 3333;
 
@@ -43,6 +46,7 @@ app.get('/', (req, res) => {
 });
 
 // user defined routes
+app.use('/api/auth', authRoute)
 
 // eror handler
 app.use((req, res, next) => {
