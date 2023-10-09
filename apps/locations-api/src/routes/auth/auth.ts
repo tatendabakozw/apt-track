@@ -101,12 +101,97 @@ router.post(
 );
 
 // login user
-router.post('/login', async(req, res, next)=>{
-    try {
-        console.log(" the rest oftrhe code goes here")
-    } catch (error) {
-        next(error)
+router.post('/login', async (req, res, next) => {
+  try {
+    // fields from request
+    const { email, password, googleAuthId } = req.body;
+
+    const _user = await User.findOne({ email: email });
+
+    // user not found
+    if (!_user) {
+      return res.status(404).send({ message: 'Account does not exist!' });
     }
-})
+    if (!_user.emailApproved) {
+      return res.status(403).send({ message: 'Verify your email address' });
+    }
+    if (_user.authMethod === 'google' && googleAuthId === '') {
+      return res.status(400).send({ message: 'Login Using Google' });
+    }
+
+    if (_user.authMethod === 'google') {
+      // decrypt password value from database
+      if (_user.googleAuthId === googleAuthId) {
+        const token = await jwt.sign(
+          {
+            email: _user.email,
+            _id: _user._id,
+            role: _user.role,
+            emailVerified: _user.emailApproved,
+            username: _user.username,
+            photoURL: _user.photoURL,
+          },
+          process.env.JWT_SECRET
+        );
+        if (token) {
+          const user = {
+            email: _user.email,
+            _id: _user._id,
+            role: _user.role,
+            emailVerified: _user.emailApproved,
+            username: _user.username,
+            photoURL: _user.photoURL,
+            token: token,
+          };
+
+          return res.send({ ...user, message: 'logged in sucessfully' });
+        } else {
+          return res
+            .status(422)
+            .send({ message: 'Failed to login, Try Again' });
+        }
+      } else {
+        return res.status(403).send({ message: 'Login using Google' });
+      }
+    }
+
+    // decrypt password value from database
+    const password_correct = await bcrypt.compare(password, _user.password);
+    if (password_correct) {
+      const token = await jwt.sign(
+        {
+          email: _user.email,
+          _id: _user._id,
+          role: _user.role,
+          emailVerified: _user.emailApproved,
+          username: _user.username,
+          photoURL: _user.photoURL,
+        },
+        process.env.JWT_SECRET
+      );
+      if (token) {
+        const user = {
+          email: _user.email,
+          _id: _user._id,
+          role: _user.role,
+          emailVerified: _user.emailApproved,
+          username: _user.username,
+          photoURL: _user.photoURL,
+          token: token,
+        };
+
+        return res.send({ user, message: 'logged in sucessfully' });
+      } else {
+        return res
+          .status(422)
+          .send({ message: 'Failed to login, Wrong details!' });
+      }
+    } else {
+      return res.status(400).send({ message: 'Wrong login details' });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
