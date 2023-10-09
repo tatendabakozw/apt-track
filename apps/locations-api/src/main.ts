@@ -9,6 +9,7 @@ import helmet from 'helmet'
 import cors from 'cors'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
+import { connectDB } from './config/mongo';
 
 // setting up dotenv for env variables
 dotenv.config()
@@ -18,6 +19,9 @@ const port = process.env.PORT || 3333;
 
 // initializing app
 const app = express();
+
+// connect database
+connectDB();
 
 // configuring cors
 const allowedOrigins = ['*'];
@@ -63,6 +67,7 @@ app.use((error, req, res, next) => {
 
 // app listener
 const server = app.listen(port, () => {
+  // console.log(process.env.MONGO_DB)
   console.log(`Listening at http://localhost:${port}/api`);
 });
 server.on('error', console.error);
