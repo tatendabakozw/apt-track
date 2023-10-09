@@ -12,6 +12,7 @@ export const connectDB = async () => {
     } as ConnectOptions);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
+    console.log(process.env.MONGO_DB)
     console.error('Could not connect to database --- ', error.message);
     process.exit(1);
   }
