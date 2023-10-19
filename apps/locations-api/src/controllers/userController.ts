@@ -82,3 +82,18 @@ export const getAllUsers = async (req:Request, res:Response, next:NextFunction) 
     next(error);
   }
 };
+
+// get single user
+// get request
+// /api/user/single/get?user_id=_id
+export const getSingleUser = async (req:Request, res:Response, next:NextFunction) => {
+  try {
+    const user = await User.findOne({ _id: req.query.user_id });
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    return res.status(200).send({ message: 'User found', user });
+  } catch (error) {
+    next(error);
+  }
+}
