@@ -1,21 +1,28 @@
 import express from 'express';
+const router = express();
 import {
   addNewLocation,
   deleteLocation,
   editLocation,
+  getAllBusStops,
   getNearBusStop,
-} from '../../controllers/locationController';
-const router = express();
+} from '../../controllers/busStopController';
+import { requireBusAdminSignIn } from '../../middleware/require_auth';
 
 // add a bus stop
 // post request
 // /api/bus-stop/add
-router.post('/add', addNewLocation);
+router.post('/add', requireBusAdminSignIn, addNewLocation);
 
 // get bus stops near  locaation
 // get request
 // /api/bus-stop/near/?lon=lon&lat=lat
-router.get('/near', getNearBusStop);
+router.post('/near', getNearBusStop);
+
+// get all bus-stops
+// get request
+// /api/bus-stop/all/?owner_id=_id
+router.post('/all',requireBusAdminSignIn, getAllBusStops);
 
 // edit location
 // patcch requeest

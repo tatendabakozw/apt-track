@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const busStop = new mongoose.Schema(
+const busStopSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -11,10 +11,10 @@ const busStop = new mongoose.Schema(
       default: [],
     },
     loc: {
-      type: [Number],
-      index: '2dsphere',
+      lon: Number,
+      lat: Number,
     },
-    user: {
+    addedBy: {
       type: String,
       required: true,
     },
@@ -24,4 +24,6 @@ const busStop = new mongoose.Schema(
   }
 );
 
-export const Locaation = mongoose.model('User', busStop);
+busStopSchema.index({ loc: "2dsphere" });
+
+export const BusStop = mongoose.model('BusStop', busStopSchema);
