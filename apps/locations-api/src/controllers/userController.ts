@@ -2,11 +2,14 @@
 import { User } from '../models/User';
 import { NextFunction, Request, Response } from 'express';
 
-
 // get all users
 // get request
 // /api/user/all
-export const getAllUsers = async (req:Request, res:Response, next:NextFunction) => {
+export const getAllUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     // handling store schema
     const query = [];
@@ -30,12 +33,10 @@ export const getAllUsers = async (req:Request, res:Response, next:NextFunction) 
       //@ts-ignore
       sort[req.query.sortBy] = req.query.sortOrder == 'asc' ? 1 : -1;
       query.push({
-        //@ts-ignore
         $sort: sort,
       });
     } else {
       query.push({
-        //@ts-ignore
         $sort: { createdAt: -1 },
       });
     }
@@ -57,11 +58,9 @@ export const getAllUsers = async (req:Request, res:Response, next:NextFunction) 
     const skip = (page - 1) * perPage;
 
     query.push({
-      //@ts-ignore
       $skip: skip,
     });
     query.push({
-      //@ts-ignore
       $limit: perPage,
     });
 
@@ -86,14 +85,51 @@ export const getAllUsers = async (req:Request, res:Response, next:NextFunction) 
 // get single user
 // get request
 // /api/user/single/get?user_id=_id
-export const getSingleUser = async (req:Request, res:Response, next:NextFunction) => {
+export const getSingleUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const user = await User.findOne({ _id: req.query.user_id });
     if (!user) {
       return res.status(404).send({ message: 'User not found' });
     }
-    return res.status(200).send({ message: 'User found', user });
+    return res.status(200).send({
+      message: 'User found',
+      user: {
+        username: user.username,
+        photoURL: user.photoURL,
+        email: user.email,
+        _id: user._id,
+        phoneNumber: user.phoneNumber,
+      },
+    });
   } catch (error) {
     next(error);
   }
-}
+};
+
+// edit single user
+// patch requerst
+// /api/user/edit/?user_id=_id
+export const editSingleUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { username, photoURL } = req.body;
+    const edited_response = await User.findByIdAndUpdate(
+      // @ts-ignore
+      { _id: req.user.user_id },
+      { username, photoURL }
+    );
+
+    return res
+      .status(200)
+      .send({ message: 'User edited successfully', response: edited_response });
+  } catch (error) {
+    next(error);
+  }
+};

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import express from 'express';
-import { getAllUsers, getSingleUser } from '../../controllers/userController';
+import { editSingleUser, getAllUsers, getSingleUser } from '../../controllers/userController';
 import { User } from '../../models/User';
 const router = express();
 
@@ -16,13 +16,7 @@ router.get('/single', getSingleUser);
 
 // edit single user
 // patch requerst
-// /api/user/edit
-router.patch('/single', async (req, res, next) => {
-  try {
-    console.log('edit single user');
-  } catch (error) {
-    next(error);
-  }
-});
+// /api/user/edit/?user_id=_id
+router.patch('/single', editSingleUser);
 
 export default router;
