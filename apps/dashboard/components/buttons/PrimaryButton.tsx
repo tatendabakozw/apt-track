@@ -23,7 +23,7 @@ const PrimaryButton: FC<Props> = (props: Props): ReactElement => {
                 ? 'bg-primary-superdark hover:bg-primary-dark '
                 : 'bg-primary-original hover:bg-primary-dark '
             } text-white `
-      } rounded-lg font-semibold text-center p-3`}
+      } rounded-lg font-semibold text-center p-3 cursor-pointer`}
     >
       {props.loading ? (
         <div className="flex flex-row items-center justify-center font-semibold capitalize">

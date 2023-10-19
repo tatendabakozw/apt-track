@@ -108,6 +108,10 @@ router.post('/login', async (req, res, next) => {
 
     const _user = await User.findOne({ email: email });
 
+    if(!email){
+      return res.status(400).send({message: 'Please provide email'})
+    }
+
     // user not found
     if (!_user) {
       return res.status(404).send({ message: 'Account does not exist!' });

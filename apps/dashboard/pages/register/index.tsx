@@ -1,33 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import axios from 'axios';
 import Link from 'next/link';
-import axios from 'axios'
 import { useState } from 'react';
-import PrimaryButton from '../components/buttons/PrimaryButton';
+import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import PrimaryButton from '../../components/buttons/PrimaryButton';
+import { getMessage } from '../../helpers/getMessage';
 import { useToast } from '@chakra-ui/react';
-import { getMessage } from '../helpers/getMessage';
 
 export function Index() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false)
+  const [agreed, setAgreed] = useState<any>(false);
   const [err, setErr] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const toast = useToast();
-  
 
-  const login_user = async () => {
-    setLoading(true)
+  const register_user = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.post(
-        `http://localhost:3333/api/auth/login`,
+        `http://localhost:3333/api/auth/register    `,
         {
           email: email,
           password: password,
+          role: 'admin',
+          agreed
         }
       );
+      // // console.log(data);
+      setLoading(false);
       toast({
         title: getMessage(data),
         status: 'success',
@@ -35,12 +39,10 @@ export function Index() {
         isClosable: true,
         position: 'top-right',
       });
-      setLoading(false)
-      router.push('/overview');
+      router.push('/login');
       setPassword('');
       setEmail('');
-      // console.log(data);
-    } catch (error:any) {
+    } catch (error: any) {
       toast({
         title: 'Account not created',
         position: 'top-right',
@@ -49,14 +51,14 @@ export function Index() {
         duration: 9000,
         isClosable: true,
       });
-      setLoading(false)
-      setErr('login fail');
+      setLoading(false);
+      setErr(getMessage(error));
     }
   };
   return (
     <>
       <Head>
-        <title>Dashboard - Login</title>
+        <title>Dashboard - Register</title>
       </Head>
       <div className="overflow-hidden relative min-h-screen grid items-center  w-full px-4">
         <div className="z-0 absolute top-40 left-4 md:w-96 w-60 md:h-96 h-60 bg-yellow-200 rounded-full blur-3xl opacity-50 mix-blend-multiply animate-blob" />
@@ -64,7 +66,7 @@ export function Index() {
         <div className="z-0 absolute bottom-8 left-80 md:w-96 w-60 md:h-96 h-60 bg-pink-200 rounded-full blur-3xl opacity-50 mix-blend-multiply animate-blob animation-delay-4000" />
         <div className="z-10 max-w-sm mx-auto w-full flex flex-col space-y-6">
           <p className="text-slate-900 text-lg font-semibold text-center">
-            Welcome Back
+            Create an account
           </p>
           <div className="flex flex-col w-full space-y-2">
             <label
@@ -94,41 +96,46 @@ export function Index() {
               className="bg-white z-10 border border-slate-400 rounded p-2"
             />
           </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-start">
-              <div className="flex items-center h-5">
-                <input
-                  id="remember"
-                  aria-describedby="remember"
-                  type="checkbox"
-                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                />
-              </div>
-              <div className="ml-3 text-sm">
-                <label
-                  htmlFor="remember"
-                  className="text-gray-500 dark:text-gray-300"
-                >
-                  Remember me
-                </label>
-              </div>
+          <div className="flex items-start">
+            <div className="flex items-center h-5">
+              <input
+                id="terms"
+                aria-describedby="terms"
+                value={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                type="checkbox"
+                className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                required
+              />
             </div>
-            <a
-              href="#"
-              className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
-            >
-              Forgot password?
-            </a>
+            <div className="ml-3 text-sm">
+              <label
+                htmlFor="terms"
+                className="font-light text-gray-500 dark:text-gray-300"
+              >
+                I accept the{' '}
+                <a
+                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  href="#"
+                >
+                  Terms and Conditions
+                </a>
+              </label>
+            </div>
           </div>
-          <PrimaryButton loading={loading} text="Sign in to account" onClick={login_user} />
+          <PrimaryButton
+            loading={loading}
+            text="Register"
+            onClick={register_user}
+          />
 
-          <p className="text-sm font-light z-10 text-gray-500 dark:text-gray-400">
-            Don’t have an account yet?{' '}
+          <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+            Already have an account?{' '}
             <a
-              href="/register"
+              href="/ "
               className="font-medium text-primary-600 hover:underline dark:text-primary-500"
             >
-              Sign up
+              Login here
             </a>
           </p>
         </div>

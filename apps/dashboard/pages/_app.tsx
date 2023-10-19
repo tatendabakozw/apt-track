@@ -1,17 +1,15 @@
 import { AppProps } from 'next/app';
-import Head from 'next/head';
+import { ThemeProvider } from 'next-themes';
+import { ChakraProvider } from '@chakra-ui/react';
 import './styles.css';
 
 function CustomApp({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <Head>
-        <title>Welcome to dashboard!</title>
-      </Head>
-      <main className="app">
+    <ThemeProvider attribute="class"  defaultTheme="light">
+      <ChakraProvider>
         <Component {...pageProps} />
-      </main>
-    </>
+      </ChakraProvider>
+    </ThemeProvider>
   );
 }
 

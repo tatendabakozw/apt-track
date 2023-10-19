@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
     terms_agreed: {
       type: Boolean,
       required: true,
-      default: false,
+      default: true,
     },
     email_key: {
       type: String,
