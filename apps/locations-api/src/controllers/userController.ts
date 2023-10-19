@@ -133,3 +133,25 @@ export const editSingleUser = async (
     next(error);
   }
 };
+
+// delete account
+// delete request
+// /api/user/delete/?user_id=_id
+export const deleteSingleUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { user_id, username } = req.query;
+    const user = await User.findOne({ _id: user_id });
+    if (username !== user.username) {
+      return res.status(400).send({ message: 'queries do not match!' });
+    }
+
+    await User.findOneAndDelete({ _id: user_id });
+    return res.status(200).send({ message: 'user deleted successfully!' });
+  } catch (error) {
+    next('error');
+  }
+};
