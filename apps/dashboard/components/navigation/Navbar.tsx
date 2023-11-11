@@ -1,27 +1,28 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { useState } from 'react';
-import ProjectsMenu from '../menus/ProjectsMenu';
+import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import ThemeToggler from '../buttons/ThemeToggle';
-
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import UserMenu from '../menus/UserMenu';
 import { data } from '../../utils/data';
+import Link from 'next/link';
+import React, { useContext } from 'react';
+import { Store } from '../../context/Store';
 
 type Props = {};
 
 const Navbar = (props: Props) => {
   const router = useRouter();
+  const { dispatch } = useContext<any>(Store);
   const { pathname } = router;
+
+  const logoutHandler = () => {
+    dispatch({ type: 'USER_LOGOUT' });
+  };
 
   return (
     <div className="w-full main-border-b">
       <div className="max-w-7xl w-full mx-auto px-4 flex flex-row items-center space-x-4 py-4 ">
-        {/* <ProjectsMenu /> */}
         <div className="flex flex-row items-center main-text  space-x-2 bg-primary rounded p-2">
-          {/* <Avatar size={'xs'} name="projects" /> */}
-          <p className='text-sm font-semibold'>Apttrack</p>
-          {/* <ChevronDownIcon height={20} width={20} /> */}
+          <p className="text-sm font-semibold">Apttrack</p>
         </div>
         <div className="md:flex hidden flex-row items-center space-x-4 text-sm font-semibold">
           {data.nav_options.map((item, index) => (
@@ -41,7 +42,13 @@ const Navbar = (props: Props) => {
         <div className="flex-1" />
         <ThemeToggler />
 
-        <UserMenu />
+        {/* <UserMenu /> */}
+        <button
+          onClick={logoutHandler}
+          className="main-link-text dark:hover:bg-slate-800 hover:bg-slate-100 p-1 rounded-full"
+        >
+          <ArrowRightOnRectangleIcon height={20} width={20} />
+        </button>
       </div>
     </div>
   );

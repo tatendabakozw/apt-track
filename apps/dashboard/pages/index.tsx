@@ -1,33 +1,45 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import axios from 'axios';
 import Link from 'next/link';
-import axios from 'axios'
-import { useState } from 'react';
+import axios from 'axios';
+import { useContext, useEffect, useState } from 'react';
 import PrimaryButton from '../components/buttons/PrimaryButton';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useToast } from '@chakra-ui/react';
 import { getMessage } from '../helpers/getMessage';
+import { Store } from '../context/Store';
+import { apiUrl } from '../utils/apiUrl';
+import { ContextType } from '../utils/types';
 
 export function Index() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const { state, dispatch } = useContext<ContextType>(Store);
+  const {userInfo} = state
   const [err, setErr] = useState('');
   const router = useRouter();
   const toast = useToast();
-  
+
+  useEffect(()=>{
+    if(userInfo){
+      router.push('/overview')
+    }
+  },[userInfo, router])
 
   const login_user = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const { data } = await axios.post(
-        `http://localhost:3333/api/auth/login`,
+        `${apiUrl}/auth/login`,
         {
           email: email,
           password: password,
         }
       );
+      dispatch({ type: 'USER_LOGIN', payload: data });
+      console.log(userInfo);
       toast({
         title: getMessage(data),
         status: 'success',
@@ -35,24 +47,26 @@ export function Index() {
         isClosable: true,
         position: 'top-right',
       });
-      setLoading(false)
-      router.push('/overview');
+      setLoading(false);
+      // router.push('/overview');
       setPassword('');
       setEmail('');
       // console.log(data);
-    } catch (error:any) {
+    } catch (error: any) {
       toast({
-        title: 'Account not created',
+        title: 'Could not login',
         position: 'top-right',
         description: getMessage(error),
         status: 'error',
         duration: 9000,
         isClosable: true,
       });
-      setLoading(false)
+      setLoading(false);
       setErr('login fail');
     }
   };
+
+  // console.log(userInfo)
   return (
     <>
       <Head>
@@ -120,16 +134,20 @@ export function Index() {
               Forgot password?
             </a>
           </div>
-          <PrimaryButton loading={loading} text="Sign in to account" onClick={login_user} />
+          <PrimaryButton
+            loading={loading}
+            text="Sign in to account"
+            onClick={login_user}
+          />
 
           <p className="text-sm font-light z-10 text-gray-500 dark:text-gray-400">
             Don’t have an account yet?{' '}
-            <a
+            <Link
               href="/register"
               className="font-medium text-primary-600 hover:underline dark:text-primary-500"
             >
               Sign up
-            </a>
+            </Link>
           </p>
         </div>
       </div>
