@@ -21,23 +21,23 @@ import {
     };
   
     return (
-      <div className="flex flex-row items-center bg-zinc-100 rounded-full p-2 space-x-4">
+      <div className="flex flex-row items-center bg-slate-50 dark:bg-slate-800 rounded-full p-2 space-x-4">
         {page <= 1 ? (
           <div></div>
         ) : (
           <button onClick={prevPage}>
-            <ChevronLeftIcon height={16} width={16} className="text-zinc-500" />
+            <ChevronLeftIcon height={16} width={16} className="text-slate-500" />
           </button>
         )}
-        <p className="text-zinc-900 font-medium">
+        <p className="text-slate-900 dark:text-white font-medium">
           {page}
-          <span className="text-zinc-500 text-sm uppercase px-4">OF</span>{totalPages}
+          <span className="text-slate-500 text-sm uppercase px-4">OF</span>{totalPages}
         </p>
         {page === totalPages ? (
           <div className="flex"></div>
         ) : (
           <button onClick={nextPage}>
-            <ChevronRightIcon height={16} width={16} />
+            <ChevronRightIcon height={16} width={16} className="text-slate-400" />
           </button>
         )}
       </div>

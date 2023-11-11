@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { ReactElement, useEffect, useState } from 'react';
-import { TrashIcon, PencilIcon } from '@heroicons/react/24/outline';
+import {
+  TrashIcon,
+  PencilIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/24/outline';
 import {
   Modal,
   ModalOverlay,
@@ -15,10 +19,12 @@ import {
 import { data } from '@utils/data';
 import { DriverType } from '@utils/types';
 import { removeFromArray } from '@helpers/arrayMethods';
+import Pagination from '@components/pagination/Pagination';
 
 export default function DriversTable(): ReactElement {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [driver_name, setDriverName] = useState('');
+  const [page, setPage] = useState<number>(1);
   const [all_drivers, setAllDrivers] = useState<DriverType[]>([]);
 
   //TODO: make api calls to get all drivers
@@ -44,38 +50,51 @@ export default function DriversTable(): ReactElement {
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="border border-slate-100 dark:border-slate-800 overflow-hidden border-b sm:rounded-lg">
+            <div className="bg-white dark:bg-slate-900 py-4 px-6 flex flex-row items-center justify-between">
+              <p className="text-slate-700 dark:text-slate-300 font-medium">
+                Drivers
+              </p>
+              <div className="flex flex-row px-4 items-center rounded border border-slate-100 dark:border-slate-800 ">
+                <MagnifyingGlassIcon height={16} width={16} className='text-slate-500' />
+                <input
+                  type="text"
+                  className="bg-white text-sm font-medium dark:bg-slate-900 outline-none border-none p-2 dark:placeholder-slate-500 "
+                  placeholder="Search driver info"
+                />
+              </div>
+            </div>
             <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-800">
-              <thead className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200    ">
+              <thead className="bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200    ">
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                    className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider"
                   >
                     Name
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                    className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider"
                   >
                     phone
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                    className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider"
                   >
                     Bus Driven
                   </th>
 
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                    className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider"
                   >
                     Status
                   </th>
 
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                    className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider"
                   >
                     Actions
                   </th>
@@ -164,6 +183,9 @@ export default function DriversTable(): ReactElement {
                 ))}
               </tbody>
             </table>
+          </div>
+          <div className="flex py-8 w-full mx-auto flex-col items-center">
+            <Pagination page={page} totalPages={3} setPage={setPage} />
           </div>
         </div>
       </div>

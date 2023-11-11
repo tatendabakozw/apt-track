@@ -1,7 +1,8 @@
+import DashboardLayout from '@layouts/DashboardLayout';
 import React from 'react';
 
 const AddDriver = () => {
-  return <div>AddDriver</div>;
+  return <DashboardLayout>AddDriver</DashboardLayout>;
 };
 
 export default AddDriver;
