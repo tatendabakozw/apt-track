@@ -18,8 +18,8 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
 
-          <link rel="shortcut icon" type="image/png" href="/images/icon.png" />
-          <link rel="apple-touch-icon" href="/images/icon.png" />
+          <link rel="shortcut icon" type="image/png" href="/icon.png" />
+          <link rel="apple-touch-icon" href="/icon.png" />
         </Head>
         <body>
           <Main />

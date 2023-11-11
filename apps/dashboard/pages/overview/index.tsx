@@ -7,8 +7,13 @@ import {
   TruckIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline';
+import { useContext } from 'react';
+import { Store } from '@context/Store';
+import { ContextType } from '@utils/types';
 
 const Overview = () => {
+  const {state} = useContext<ContextType>(Store)
+  const {userInfo} = state
   const over_view_tiles = [
     {
       name: 'Drivers',
@@ -35,6 +40,8 @@ const Overview = () => {
     { heading: 'Bus ER33', details: 'We suspect overspeeding around banket' },
     { heading: 'Bus TY8B', details: 'Is haaving a very profitable day today' },
   ];
+
+  console.log(userInfo)
 
   return (
     <OverviewLayout heading="Overview">

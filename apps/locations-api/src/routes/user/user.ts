@@ -18,7 +18,7 @@ router.get('/single',requireUserSignIn, getSingleUser);
 // edit single user
 // patch requerst
 // /api/user/edit/?user_id=_id
-router.patch('/single',requireUserSignIn, editSingleUser);
+router.patch('/edit',requireUserSignIn, editSingleUser);
 
 //delete user
 // delete request

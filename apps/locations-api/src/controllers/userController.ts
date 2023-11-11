@@ -119,11 +119,17 @@ export const editSingleUser = async (
   next: NextFunction
 ) => {
   try {
-    const { username, photoURL } = req.body;
+    const { username, photoURL, company_name, logo } = req.body;
     const edited_response = await User.findByIdAndUpdate(
-      // @ts-ignore
-      { _id: req.user.user_id },
-      { username, photoURL }
+      { _id: req.query.user_id },
+      {
+        username,
+        photoURL,
+        company: {
+          name: company_name,
+          logo,
+        },
+      }
     );
 
     return res

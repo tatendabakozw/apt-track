@@ -6,12 +6,14 @@ import { data } from '@utils/data';
 import Link from 'next/link';
 import React, { useContext } from 'react';
 import { Store } from '@context/Store';
+import Image from 'next/image';
+import { ContextType } from '@utils/types';
 
 type Props = {};
 
 const Navbar = (props: Props) => {
   const router = useRouter();
-  const { dispatch } = useContext<any>(Store);
+  const { dispatch } = useContext<ContextType>(Store);
   const { pathname } = router;
 
   const logoutHandler = () => {
@@ -21,8 +23,9 @@ const Navbar = (props: Props) => {
   return (
     <div className="w-full main-border-b">
       <div className="max-w-7xl w-full mx-auto px-4 flex flex-row items-center space-x-4 py-4 ">
-        <div className="flex flex-row items-center main-text  space-x-2 bg-primary rounded p-2">
-          <p className="text-sm font-semibold">Apttrack</p>
+        <div className="flex flex-row items-center pl-2  space-x-2">
+          <Image src={'/icon.svg'} width={20} height={20} alt="site logo" className='rounded' />
+          <p className="text-sm font-semibold main-text">Apttrack</p>
         </div>
         <div className="md:flex hidden flex-row items-center space-x-4 text-sm font-semibold">
           {data.nav_options.map((item, index) => (

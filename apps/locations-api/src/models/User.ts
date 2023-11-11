@@ -1,6 +1,4 @@
-// const mongoose = require('mongoose')
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema(
   {
@@ -8,12 +6,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please enter your email'],
       trim: true,
-      unique: true  
+      unique: true,
     },
     password: {
       type: String,
       required: [true, 'Please enter your password'],
-      trim: true
+      trim: true,
     },
     role: {
       type: String,
@@ -23,6 +21,16 @@ const userSchema = new mongoose.Schema(
     emailApproved: {
       type: Boolean,
       default: true,
+    },
+    company: {
+      name: {
+        type: String,
+        default: '',
+      },
+      logo: {
+        type: String,
+        default: '',
+      },
     },
     terms_agreed: {
       type: Boolean,

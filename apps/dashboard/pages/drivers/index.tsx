@@ -13,7 +13,7 @@ const Drivers = (props: Props) => {
       <div className="flex w-full max-w-7xl mx-auto text-main flex-col md:px-8 px-4 min-h-screen">
         <div className="flex flex-row justify-between py-12">
           <div className="flex flex-col space-y-2">
-            <p className="text-zinc-900 font-bold text-3xl">
+            <p className="heading-text font-bold text-3xl">
               Drivers <span className="text-secondary-original">List</span>
             </p>
             <p className="text-sm font-medium text-slate-500">
