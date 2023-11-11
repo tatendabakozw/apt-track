@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { ReactNode, useContext, useEffect } from 'react'
-import Navbar from '../components/navigation/Navbar'
-import Head from 'next/head'
-import { Store } from '../context/Store'
+import Navbar from '@components/navigation/Navbar'
 import { useRouter } from 'next/router'
+import { Store } from '@context/Store'
+import Head from 'next/head'
 
 type Props = {
     children?:ReactNode

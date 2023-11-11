@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React from 'react';
 import DashboardLayout from './DashboardLayout';
-import OverviewNavbar from '../components/navigation/OverviewNavbar';
+import OverviewNavbar from '@components/navigation/OverviewNavbar';
 
 type Props = { children: any; heading: string };
 

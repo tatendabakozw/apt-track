@@ -2,10 +2,10 @@
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import ThemeToggler from '../buttons/ThemeToggle';
 import { useRouter } from 'next/router';
-import { data } from '../../utils/data';
+import { data } from '@utils/data';
 import Link from 'next/link';
 import React, { useContext } from 'react';
-import { Store } from '../../context/Store';
+import { Store } from '@context/Store';
 
 type Props = {};
 

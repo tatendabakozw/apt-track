@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useReducer } from 'react';
 import Cookies from 'js-cookie';
-import { ContextType } from '../utils/types';
+import { ContextType } from '@utils/types';
 
 const initialState = {
   darkMode: false,
