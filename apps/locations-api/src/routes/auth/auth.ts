@@ -108,8 +108,8 @@ router.post('/login', async (req, res, next) => {
 
     const _user = await User.findOne({ email: email });
 
-    if(!email){
-      return res.status(400).send({message: 'Please provide email'})
+    if (!email) {
+      return res.status(400).send({ message: 'Please provide email' });
     }
 
     // user not found
@@ -134,6 +134,7 @@ router.post('/login', async (req, res, next) => {
             emailVerified: _user.emailApproved,
             username: _user.username,
             photoURL: _user.photoURL,
+            company: _user.company,
           },
           process.env.JWT_SECRET
         );
@@ -146,6 +147,7 @@ router.post('/login', async (req, res, next) => {
             username: _user.username,
             photoURL: _user.photoURL,
             token: token,
+            company: _user.company,
           };
 
           return res.send({ ...user, message: 'logged in sucessfully' });
@@ -170,6 +172,7 @@ router.post('/login', async (req, res, next) => {
           emailVerified: _user.emailApproved,
           username: _user.username,
           photoURL: _user.photoURL,
+          company: _user.company
         },
         process.env.JWT_SECRET
       );
@@ -182,6 +185,7 @@ router.post('/login', async (req, res, next) => {
           username: _user.username,
           photoURL: _user.photoURL,
           token: token,
+          company: _user.company
         };
 
         return res.send({ user, message: 'logged in sucessfully' });

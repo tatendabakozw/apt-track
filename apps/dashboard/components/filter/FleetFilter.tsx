@@ -7,9 +7,9 @@ const FleetFilter = () => {
       <AdjustmentsHorizontalIcon
         height={20}
         width={20}
-        className="light-text"
+        className="main-text"
       />
-      <p className="text-sm font-medium">Filters</p>
+      <p className="text-sm font-medium main-text">Filters</p>
     </button>
   );
 };

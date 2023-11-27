@@ -1,10 +1,14 @@
 import { Avatar } from '@chakra-ui/react';
+import CustomAlert from '@components/alerts/CustomAlert';
 import PrimaryButton from '@components/buttons/PrimaryButton';
 import LabeledInput from '@components/inputs/LabeledInput';
+import { Store } from '@context/Store';
 import { getMessage } from '@helpers/getMessage';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
 import DashboardLayout from '@layouts/DashboardLayout';
-import React, { useState } from 'react';
+import { apiUrl } from '@utils/apiUrl';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
 
 const AddDriver = () => {
   const [first_name, setFirstName] = useState<string>('');
@@ -13,20 +17,42 @@ const AddDriver = () => {
   const [national_id, setNationalId] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [msg, setMsg] = useState('');
+  const [error, setError] = useState('');
+  const { state } = useContext(Store);
+  const { userInfo } = state;
 
   const saveDriverHandler = async () => {
     setLoading(true);
     try {
-      console.log('add driver handker');
+      const { data } = await axios.post(
+        `${apiUrl}/driver/create`,
+        {
+          first_name,
+          last_name,
+          phone_number: phone,
+          national_id,
+          email,
+        },
+        {
+          headers: {
+            token: userInfo.token,
+          },
+        }
+      );
+      setMsg(getMessage(data));
+      setError('');
+      // console.log(getMessage(data));
       setLoading(false);
-      setFirstName('')
-      setlastName('')
-      setPhone('')
-      setNationalId('')
-      setEmail('')
+      setFirstName('');
+      setlastName('');
+      setPhone('');
+      setNationalId('');
+      setEmail('');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setLoading(false);
+      setError(getMessage(error));
       console.log(getMessage(error));
     }
   };
@@ -83,7 +109,8 @@ const AddDriver = () => {
                 placeholder="Enter email address"
                 className="col-span-1"
               />
-              <div className="col-span-2">
+              <div className="col-span-2 space-y-4">
+                {error && <CustomAlert type='error' message={error} />}
                 <PrimaryButton
                   text="Save driver"
                   loading={loading}

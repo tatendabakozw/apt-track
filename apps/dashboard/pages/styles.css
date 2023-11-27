@@ -77,7 +77,7 @@
   .heading-text {
     @apply dark:text-slate-200 text-slate-900;
   }
-  .light-text {
+  .c {
     @apply dark:text-slate-400 text-slate-500;
   }
   .super-light-text {

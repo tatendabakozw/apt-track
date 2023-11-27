@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import PrimaryButton from '../../components/buttons/PrimaryButton';
 import { getMessage } from '../../helpers/getMessage';
 import { useToast } from '@chakra-ui/react';
+import { apiUrl } from '@utils/apiUrl';
 
 export function Index() {
   const [email, setEmail] = useState('');
@@ -22,7 +23,7 @@ export function Index() {
     setLoading(true);
     try {
       const { data } = await axios.post(
-        `http://localhost:3333/api/auth/register    `,
+        `${apiUrl}/auth/register    `,
         {
           email: email,
           password: password,
@@ -39,7 +40,7 @@ export function Index() {
         isClosable: true,
         position: 'top-right',
       });
-      router.push('/login');
+      router.push('/');
       setPassword('');
       setEmail('');
     } catch (error: any) {

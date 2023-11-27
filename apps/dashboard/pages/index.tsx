@@ -25,13 +25,15 @@ export function Index() {
 
   useEffect(() => {
     if (userInfo) {
-      if (userInfo?.company) {
+      if (userInfo.role === "bus_admin") {
         router.push('/overview');
       }
 
       router.push('/on-boarding');
     }
   }, [userInfo, router]);
+
+  // console.log(userInfo?.company)
 
   const login_user = async () => {
     setLoading(true);
@@ -41,7 +43,7 @@ export function Index() {
         password: password,
       });
       dispatch({ type: 'USER_LOGIN', payload: data.user });
-      // console.log(userInfo);
+      console.log(data);
       toast({
         title: getMessage(data),
         status: 'success',
@@ -75,9 +77,9 @@ export function Index() {
         <title>Dashboard - Login</title>
       </Head>
       <div className="overflow-hidden relative min-h-screen grid items-center  w-full px-4">
-        <div className="z-0 absolute top-40 left-4 md:w-96 w-60 md:h-96 h-60 bg-yellow-200 rounded-full blur-3xl opacity-50 mix-blend-multiply animate-blob" />
-        <div className="z-0 absolute top-52 right-52 md:w-96 w-60 md:h-96 h-60 bg-purple-200 rounded-full blur-3xl opacity-50 mix-blend-multiply animate-blob animation-delay-2000" />
-        <div className="z-0 absolute bottom-8 left-80 md:w-96 w-60 md:h-96 h-60 bg-pink-200 rounded-full blur-3xl opacity-50 mix-blend-multiply animate-blob animation-delay-4000" />
+        <div className="z-0 absolute top-40 left-4 md:w-96 w-60 md:h-96 h-60 bg-yellow-100 rounded-full blur-3xl opacity-50 mix-blend-multiply animate-blob" />
+        <div className="z-0 absolute top-52 right-52 md:w-96 w-60 md:h-96 h-60 bg-purple-100 rounded-full blur-3xl opacity-50 mix-blend-multiply animate-blob animation-delay-2000" />
+        <div className="z-0 absolute bottom-8 left-80 md:w-96 w-60 md:h-96 h-60 bg-pink-100 rounded-full blur-3xl opacity-50 mix-blend-multiply animate-blob animation-delay-4000" />
         <div className="z-10 max-w-sm mx-auto w-full flex flex-col space-y-6">
           {/* <Image src={'/icon.png'} height={50} width={60} /> */}
           <p className="main-text text-lg font-semibold text-center">
@@ -94,7 +96,7 @@ export function Index() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-secondary z-10 light-link-text border main-secondary rounded p-2"
+              className="bg-secondary z-10 border main-secondary main-text rounded p-2"
             />
           </div>
           <div className="flex flex-col w-full space-y-2">
@@ -108,7 +110,7 @@ export function Index() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-secondary z-10 light-link-text border main-secondary rounded p-2"
+              className="bg-secondary z-10 main-text border main-secondary rounded p-2"
             />
           </div>
           <div className="flex items-center justify-between">

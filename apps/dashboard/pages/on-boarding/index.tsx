@@ -28,6 +28,7 @@ const OnBoarding = () => {
         `${apiUrl}/user/edit/?user_id=${userInfo._id}`,
         {
           company_name,
+          role: 'bus_admin'
         },
         {
           headers: {

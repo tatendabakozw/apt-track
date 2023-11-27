@@ -1,37 +1,37 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { ReactNode, useContext, useEffect } from 'react'
-import Navbar from '@components/navigation/Navbar'
-import { useRouter } from 'next/router'
-import { Store } from '@context/Store'
-import Head from 'next/head'
+import React, { ReactNode, useContext, useEffect } from 'react';
+import Navbar from '@components/navigation/Navbar';
+import { useRouter } from 'next/router';
+import { Store } from '@context/Store';
+import Head from 'next/head';
 
 type Props = {
-    children?:ReactNode
-}
+  children?: ReactNode;
+};
 
 const DashboardLayout = (props: Props) => {
-  const { state } = useContext<any>(Store);
-  const {userInfo} = state
-  const router = useRouter()
+  const { state } = useContext(Store);
+  const { userInfo } = state;
+  const router = useRouter();
 
-  useEffect(()=>{
-    if(!userInfo){
-      router.push('/')
+  useEffect(() => {
+    if (userInfo.role !== 'bus_admin') {
+      router.push('/');
     }
-  },[userInfo, router])
+  }, [userInfo, router]);
   return (
     <>
-    <Head>
-      <title>Dashboard</title>
-    </Head>
-    <div className='flex flex-col'>
+      <Head>
+        <title>Dashboard</title>
+      </Head>
+      <div className="flex flex-col">
         <div className="nav">
-            <Navbar />
+          <Navbar />
         </div>
         {props.children}
-    </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;

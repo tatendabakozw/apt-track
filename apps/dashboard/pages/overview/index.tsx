@@ -64,7 +64,8 @@ const Overview = () => {
               <OverviewGraph />
             </div>  
           </div>
-          <div className=" main-border col-span-2 p-4 rounded-lg">
+          <div className="flex col-span-2 flex-col">
+          <div className=" main-border p-4 rounded-lg">
             <p className="heading-small text-3xl font-bold pb-1">
               Recent Events
             </p>
@@ -80,6 +81,7 @@ const Overview = () => {
                 />
               ))}
             </div>
+          </div>
           </div>
         </div>
       </div>

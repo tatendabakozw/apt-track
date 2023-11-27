@@ -119,7 +119,7 @@ export const editSingleUser = async (
   next: NextFunction
 ) => {
   try {
-    const { username, photoURL, company_name, logo } = req.body;
+    const { username, photoURL, company_name, logo, role } = req.body;
     const edited_response = await User.findByIdAndUpdate(
       { _id: req.query.user_id },
       {
@@ -129,6 +129,7 @@ export const editSingleUser = async (
           name: company_name,
           logo,
         },
+        role: role
       }
     );
 

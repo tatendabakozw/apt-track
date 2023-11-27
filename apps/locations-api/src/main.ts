@@ -18,6 +18,7 @@ dotenv.config()
 import authRoute from './routes/auth/auth'
 import userRoute from './routes/user/user'
 import busStopRoute from './routes/bus-stop/bus-stop'
+import driverRoute from './routes/driver/driver'
 
 // port to listen on development
 const port = process.env.PORT || 3333;
@@ -51,6 +52,7 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
 app.use('/api/bus-stop', busStopRoute)
+app.use('/api/driver', driverRoute)
 
 // eror handler
 app.use((req, res, next) => {
