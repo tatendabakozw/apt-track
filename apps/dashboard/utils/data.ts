@@ -3,7 +3,8 @@ export const data = {
     { name: 'Overview', _id: 'overview', location: '/overview' },
     { name: 'Drivers', _id: 'drivers', location: '/drivers' },
     { name: 'Fleet', _id: 'fleet', location: '/fleet' },
-    { name: 'Bus Stops', _id: 'bus-stops', location: '/bus-stops' },
+    // { name: 'Bus Stops', _id: 'bus-stops', location: '/bus-stops' },
+    { name: 'Routes', _id: 'routes', location: '/routes' },
     { name: 'Settings', _id: 'settings', location: '/settings' },
   ],
   drivers: [

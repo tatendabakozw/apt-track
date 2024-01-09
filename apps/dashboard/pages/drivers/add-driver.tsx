@@ -22,6 +22,8 @@ const AddDriver = () => {
   const { state } = useContext(Store);
   const { userInfo } = state;
 
+  console.log(userInfo)
+
   const saveDriverHandler = async () => {
     setLoading(true);
     try {
@@ -36,7 +38,7 @@ const AddDriver = () => {
         },
         {
           headers: {
-            token: userInfo.token,
+            Authorization: userInfo.token,
           },
         }
       );
@@ -52,6 +54,7 @@ const AddDriver = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setLoading(false);
+      setMsg('')
       setError(getMessage(error));
       console.log(getMessage(error));
     }
@@ -111,6 +114,7 @@ const AddDriver = () => {
               />
               <div className="col-span-2 space-y-4">
                 {error && <CustomAlert type='error' message={error} />}
+                {msg && <CustomAlert type='success' message={msg} />}
                 <PrimaryButton
                   text="Save driver"
                   loading={loading}

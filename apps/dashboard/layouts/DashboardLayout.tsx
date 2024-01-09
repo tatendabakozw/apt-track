@@ -15,7 +15,7 @@ const DashboardLayout = (props: Props) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (userInfo.role !== 'bus_admin') {
+    if (userInfo?.role !== 'bus_admin') {
       router.push('/');
     }
   }, [userInfo, router]);

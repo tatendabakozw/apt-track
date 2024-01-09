@@ -34,6 +34,7 @@ router.post('/create', requireBusAdminSignIn, async (req, res, next) => {
       phone_number,
       national_id,
       email,
+      addedBy: adding_user._id,
     });
 
     const savedDriver = await newDriver.save();
@@ -43,6 +44,54 @@ router.post('/create', requireBusAdminSignIn, async (req, res, next) => {
       .send({ message: 'New driver added', driiver: savedDriver });
 
     // console.log('creaate a  new driver');
+  } catch (error) {
+    next(error);
+  }
+});
+
+// get all drivers for the company
+// get request
+// /api/driver/all
+router.get('/all', requireBusAdminSignIn, async (req, res, next) => {
+  try {
+    const query = [];
+    // @ts-ignore
+    const _user = await User.findOne({ _id: req.user._id });
+
+    query.push({
+      $match: {
+        addedBy: _user._id,
+      },
+    });
+
+    // handling search queries
+    if (req.query.keyword && req.query.keyword != '') {
+      query.push({
+        $match: {
+          $or: [
+            { name: { $regex: req.query.keyword, $options: 'i' } },
+            { description: { $regex: req.query.keyword, $options: 'i' } },
+            { category: { $regex: req.query.keyword, $options: 'i' } },
+            { amount: { $regex: req.query.keyword, $options: 'i' } },
+          ],
+        },
+      });
+    }
+
+    // handling sort
+    if (req.query.sortBy && req.query.sortOrder) {
+      const sort = {};
+      // @ts-ignore
+      sort[req.query.sortBy] = req.query.sortOrder == 'asc' ? 1 : -1;
+      query.push({
+        $sort: sort,
+      });
+    } else {
+      query.push({
+        //@ts-ignore
+        $sort: { createdAt: -1 },
+      });
+    }
   } catch (error) {
     next(error);
   }

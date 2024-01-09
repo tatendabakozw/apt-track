@@ -11,7 +11,6 @@ import { getMessage } from '../helpers/getMessage';
 import { Store } from '../context/Store';
 import { apiUrl } from '../utils/apiUrl';
 import { ContextType } from '../utils/types';
-import Image from 'next/image';
 
 export function Index() {
   const [email, setEmail] = useState('');
