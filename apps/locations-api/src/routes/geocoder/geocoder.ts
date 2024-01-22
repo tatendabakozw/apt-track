@@ -7,6 +7,7 @@ const router = express();
 router.get('/get', async (req, res, next) => {
   try {
     const response = req.body
+    console.log(req.body)
     return res.status(200).send({message: 'Sucessfull response', data: response})
   } catch (error) {
     next(error);
