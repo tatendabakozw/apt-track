@@ -54,7 +54,7 @@ app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
 app.use('/api/bus-stop', busStopRoute)
 app.use('/api/driver', driverRoute)
-app.use('/api/geocoder', geocoderRoute)
+app.use('/geocoder', geocoderRoute)
 
 // eror handler
 app.use((req, res, next) => {
