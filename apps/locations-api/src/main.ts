@@ -51,7 +51,7 @@ app.get('/', (req, res) => {
 });
 
 // default route for api
-app.prependOnceListener('/', (req, res) => {
+app.post('/', (req, res) => {
   console.log(req.body)
   res.send({ message: 'Welcome to locations-api PORT!', body: req.body });
 });
