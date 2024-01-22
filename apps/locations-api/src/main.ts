@@ -46,7 +46,7 @@ app.use(cors(options));
 
 // default route for api
 app.get('/', (req, res) => {
-  res.send({ message: 'Welcome to locations-api!' });
+  res.send({ message: 'Welco me to locations-api!' });
 });
 
 // user defined routes
