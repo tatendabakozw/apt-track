@@ -50,6 +50,12 @@ app.get('/', (req, res) => {
   res.send({ message: 'Welco me to locations-api!', body: req.body });
 });
 
+// default route for api
+app.prependOnceListener('/', (req, res) => {
+  console.log(req.body)
+  res.send({ message: 'Welcome to locations-api PORT!', body: req.body });
+});
+
 // user defined routes
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
