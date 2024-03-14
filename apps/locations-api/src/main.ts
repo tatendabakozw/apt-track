@@ -56,6 +56,18 @@ app.post('/', (req, res) => {
   res.send({ message: 'Welcome to locations-api PORT!', body: req.body });
 });
 
+app.post('/teltonika-data', (req, res) => {
+  const dataFromTeltonika = req.body;
+  
+  // Handle Teltonika data based on your specific protocol
+  // Example: Extract and log GPS coordinates
+  const { latitude, longitude } = dataFromTeltonika.gps;
+  console.log(`GPS Coordinates: ${latitude}, ${longitude}`);
+
+  // Process the data or send a response back to the device
+  res.send('Data received successfully');
+});
+
 // user defined routes
 app.use('/api/auth', authRoute)
 app.use('/api/user', userRoute)
